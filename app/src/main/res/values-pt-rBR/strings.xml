@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyCookBook</string>
+    <string name="adicionar_receita">Adicionar Receita</string>
+    <string name="categoria">Categoria:</string>
+</resources>

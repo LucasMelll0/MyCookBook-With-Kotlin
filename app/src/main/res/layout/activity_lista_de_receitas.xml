@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_lista_receitas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/receita_item"/>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_adicionar_receita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:icon="@drawable/ic_add"
+        android:text="@string/adicionar_receita"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

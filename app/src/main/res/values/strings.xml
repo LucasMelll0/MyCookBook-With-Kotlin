@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyCookBook</string>
+    <string name="adicionar_receita">Add Recipe</string>
+    <string name="categoria">Category:</string>
+    <string name="nome_da_receita">Recipe Name</string>
+    <string name="insira_ingredientes_aqui">Insert ingredients here!!</string>
+    <string name="descricao_da_receita">Description of Recipe</string>
+    <string name="porcao">Portion</string>
+    <string name="salvar_receita">SAVE RECIPE</string>
+</resources>

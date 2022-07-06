@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FormularioReceitaActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_nome_receita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="16dp"
+                android:hint="@string/nome_da_receita"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearlayout_formulario_ingredientes_receita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layout_constraintEnd_toEndOf="@id/edittext_nome_receita"
+                app:layout_constraintStart_toStartOf="@id/edittext_nome_receita"
+                app:layout_constraintTop_toBottomOf="@id/edittext_nome_receita" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_ingrediente_receita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:hint="@string/insira_ingredientes_aqui"
+                app:layout_constraintEnd_toStartOf="@id/imagebutton_adicionar_ingrediente"
+                app:layout_constraintStart_toStartOf="@id/edittext_nome_receita"
+                app:layout_constraintTop_toBottomOf="@id/linearlayout_formulario_ingredientes_receita" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imagebutton_adicionar_ingrediente"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_add"
+                android:tint="@color/black"
+                app:layout_constraintBottom_toBottomOf="@id/edittext_ingrediente_receita"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edittext_ingrediente_receita" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_descricao_receita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/descricao_da_receita"
+                android:inputType="textMultiLine"
+                android:maxLines="30"
+                app:layout_constraintEnd_toEndOf="@id/edittext_nome_receita"
+                app:layout_constraintStart_toStartOf="@id/edittext_nome_receita"
+                app:layout_constraintTop_toBottomOf="@id/edittext_ingrediente_receita" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spinner_categoria_receita"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="@id/edittext_nome_receita"
+                app:layout_constraintStart_toStartOf="@id/edittext_nome_receita"
+                app:layout_constraintTop_toBottomOf="@id/edittext_descricao_receita" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edittext_porcao_receita"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/porcao"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="@id/spinner_categoria_receita"
+                app:layout_constraintStart_toStartOf="@id/spinner_categoria_receita"
+                app:layout_constraintTop_toBottomOf="@id/spinner_categoria_receita" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_salva_receita"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center_horizontal"
+                android:text="@string/salvar_receita"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/edittext_nome_receita"
+                app:layout_constraintStart_toStartOf="@id/edittext_nome_receita"
+                app:layout_constraintTop_toTopOf="@id/edittext_porcao_receita"
+                app:layout_constraintVertical_bias="1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
