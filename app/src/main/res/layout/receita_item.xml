@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="8dp"
+    android:layout_margin="14dp"
     app:cardCornerRadius="10dp"
-    android:layout_margin="14dp">
+    app:cardElevation="8dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageview_item_receita"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:scaleType="centerCrop"
-            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintBottom_toTopOf="@id/textview_item_nome_receita"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/textview_item_nome_receita"
-            app:srcCompat="@drawable/produto_1"
-            />
+            app:srcCompat="@drawable/produto_1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_item_nome_receita"
@@ -38,28 +36,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageview_item_receita"
             tools:text="Nome da Receita" />
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:id="@+id/textview_item_descricao_receita"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/yellow"
-            app:layout_constraintTop_toTopOf="@id/textview_item_categoria_receita"
-            app:layout_constraintBottom_toBottomOf="@id/textview_item_categoria_receita"
-            app:layout_constraintEnd_toStartOf="@id/textview_item_categoria_receita"
-            android:layout_marginEnd="5dp"
-            android:text="@string/categoria"
-            android:textSize="16sp"
-            />
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview_item_categoria_receita"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textview_item_nome_receita"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            tools:text="@tools:sample/lorem/random"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="@id/textview_item_nome_receita"
-            tools:text="Categoria receita"
-            android:textSize="16sp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_item_nome_receita" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

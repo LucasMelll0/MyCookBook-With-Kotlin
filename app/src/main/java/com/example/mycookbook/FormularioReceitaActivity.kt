@@ -2,7 +2,7 @@ package com.example.mycookbook
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mycookbook.dao.ReceitaDAO
+import com.example.mycookbook.database.dao.ReceitaDAO
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
 
@@ -15,7 +15,6 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private val campoDescricao by lazy { binding.edittextDescricaoReceita }
     private val campoPorcao by lazy { binding.edittextPorcaoReceita }
     private val fabSalva by lazy { binding.fabSalvaReceita }
-    private val dao by lazy { ReceitaDAO() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,6 @@ class FormularioReceitaActivity : AppCompatActivity() {
                 porcao = porcao
             )
 
-            dao.adicionarReceita(receita)
             finish()
         }
 
