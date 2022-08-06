@@ -6,10 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".FormularioReceitaActivity">
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_formulario_receita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageview_formulario_receita"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:srcCompat="@drawable/produto_1" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_formulario_receita"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/appbar_formulario_receita"
+        app:layout_anchorGravity="bottom|end"
+        app:cardElevation="16dp"
+        android:layout_marginEnd="16dp"
+        android:minWidth="100dp"
+        android:minHeight="50dp"
+        app:cardCornerRadius="40dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Testes"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,7 +70,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edittext_nome_receita"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="16dp"
                 android:hint="@string/nome_da_receita"
@@ -38,7 +90,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edittext_ingrediente_receita"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginVertical="16dp"
                 android:hint="@string/insira_ingredientes_aqui"
                 app:layout_constraintEnd_toStartOf="@id/imagebutton_adicionar_ingrediente"
@@ -59,7 +111,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edittext_descricao_receita"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/descricao_da_receita"
                 android:inputType="textMultiLine"
@@ -80,7 +132,7 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edittext_porcao_receita"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:hint="@string/porcao"
                 android:inputType="number"
@@ -102,7 +154,7 @@
                 app:layout_constraintVertical_bias="1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

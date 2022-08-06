@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook-With-Kotlin/app/src/main/res/layout/activity_formulario_receita.xml" value="0.264" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook-With-Kotlin/app/src/main/res/layout/activity_lista_de_receitas.xml" value="0.25" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook-With-Kotlin/app/src/main/res/layout/receita_item.xml" value="0.264" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook-With-Kotlin/app/src/main/res/layout/toolbar.xml" value="0.25" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook-With-Kotlin/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook-With-Kotlin/app/src/main/res/menu/menu_receita.xml" value="0.2" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook/app/src/main/res/drawable/rounded_corner.xml" value="0.2285" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook/app/src/main/res/layout/activity_formulario_receita.xml" value="0.23369565217391305" />
         <entry key="..\:/Users/lucas/AndroidStudioProjects/MyCookBook/app/src/main/res/layout/activity_lista_de_receitas.xml" value="0.264" />

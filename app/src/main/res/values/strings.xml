@@ -7,4 +7,6 @@
     <string name="descricao_da_receita">Description of Recipe</string>
     <string name="porcao">Portion</string>
     <string name="salvar_receita">SAVE RECIPE</string>
+    <string name="editar">edit</string>
+    <string name="deletar">delete</string>
 </resources>
