@@ -66,6 +66,11 @@ class ListaDeReceitasActivity : AppCompatActivity() {
 
     private fun configuraFuncoesAdapter() {
         adapter.apply {
+            quandoClica = { receita ->
+                vaiPara(DetalhesReceitaActivity::class.java){
+                    putExtra(CHAVE_RECEITA_ID, receita.id)
+                }
+            }
             quandoClicaEmDeletar = { receita ->
                 lifecycleScope.launch {
                     receitaRepository.deleta(receita)

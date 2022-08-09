@@ -9,4 +9,7 @@
     <string name="salvar_receita">SAVE RECIPE</string>
     <string name="editar">edit</string>
     <string name="deletar">delete</string>
+    <string name="modo_de_preparo">How to Do</string>
+    <string name="categoria_detalhes">Category:</string>
+    <string name="porcao_detalhes">Portion:</string>
 </resources>
