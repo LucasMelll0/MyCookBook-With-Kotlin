@@ -1,20 +1,16 @@
-package com.example.mycookbook
+package com.example.mycookbook.ui.activity
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
 import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesFormularioAdapter
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class FormularioReceitaActivity : AppCompatActivity() {
@@ -26,7 +22,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private val campoDescricao by lazy { binding.edittextDescricaoReceita }
     private val campoPorcao by lazy { binding.edittextPorcaoReceita }
     private val fabSalva by lazy { binding.fabSalvaReceita }
-    private val ingredientes by lazy { mutableListOf<String?>() }
+    private val ingredientes by lazy { mutableListOf<String>() }
     private val adapterIngredientes by lazy {
         ListaDeIngredientesFormularioAdapter(
             this,
@@ -49,6 +45,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private fun configuraListaIngredientes() {
         binding.recyclerViewIngredientesFormulario.apply {
             adapter = adapterIngredientes
+            configuraFuncoesAdapter()
             layoutManager = LinearLayoutManager(this@FormularioReceitaActivity)
         }
 
@@ -58,40 +55,66 @@ class FormularioReceitaActivity : AppCompatActivity() {
 
     }
 
+    private fun configuraFuncoesAdapter() {
+        adapterIngredientes.apply {
+            quandoClicaEmEditar = { ingrediente ->
+                binding.edittextIngredienteReceita.setText(ingrediente)
+                ingredientes.remove(ingrediente)
+                atualiza(ingredientes)
+            }
+            quandoClicaEmDeletar = { ingrediente ->
+                ingredientes.remove(ingrediente)
+                atualiza(ingredientes)
+            }
+        }
+    }
+
     private fun configuraCampoIngredientes() {
         binding.apply {
             imagebuttonAdicionarIngrediente.setOnClickListener {
-                val ingrediente = campoIngrediente.text.toString()
-                ingredientes.add(ingrediente)
-                adapterIngredientes.atualiza(ingredientes)
-                Log.i(TAG, "configuraCampoIngredientes: $ingredientes")
+                retornaIngredienteSeForValido()?.let { ingrediente ->
+                    ingredientes.add(ingrediente)
+                    adapterIngredientes.atualiza(ingredientes)
+                    campoIngrediente.text?.clear()
+                    Log.i(TAG, "configuraCampoIngredientes: $ingredientes")
+                }
             }
+        }
+    }
+
+    private fun retornaIngredienteSeForValido() : String? {
+        return campoIngrediente.text.toString().ifBlank {
+            null
         }
     }
 
     private fun configuraFab() {
         fabSalva.setOnClickListener {
-            val nome = campoNome.text.toString()
-            val descricao = campoDescricao.text.toString()
-            val porcao = if (!campoPorcao.text.isNullOrBlank()) {
-                campoPorcao.text.toString().toInt()
-            } else {
-                0
-            }
-
-            val receita = Receita(
-                nome = nome,
-                ingredientes = ingredientes.toList() as ArrayList<String>,
-                descricao = descricao,
-                categoria = "teste",
-                porcao = porcao
-            )
-
+            val receita = criaReceita()
             lifecycleScope.launch {
                 receitaRepository.salva(receita)
             }
             finish()
         }
 
+    }
+
+    private fun criaReceita(): Receita {
+        val nome = campoNome.text.toString()
+        val descricao = campoDescricao.text.toString()
+        val porcao = if (!campoPorcao.text.isNullOrBlank()) {
+            campoPorcao.text.toString().toInt()
+        } else {
+            0
+        }
+
+        val receita = Receita(
+            nome = nome,
+            ingredientes = ingredientes.toList(),
+            descricao = descricao,
+            categoria = "teste",
+            porcao = porcao
+        )
+        return receita
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FormularioReceitaActivity">
+    tools:context=".ui.activity.FormularioReceitaActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_formulario_receita"
@@ -117,8 +117,8 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
-                app:layout_constraintEnd_toEndOf="@id/inputlayout_ingredientes_formulario"
-                app:layout_constraintStart_toStartOf="@id/inputlayout_ingredientes_formulario"
+                app:layout_constraintEnd_toEndOf="@id/inputlayout_nome_formulario"
+                app:layout_constraintStart_toStartOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintTop_toBottomOf="@id/inputlayout_ingredientes_formulario">
 
                 <com.google.android.material.textfield.TextInputEditText

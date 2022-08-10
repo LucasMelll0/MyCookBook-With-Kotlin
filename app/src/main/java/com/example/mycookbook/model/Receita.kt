@@ -13,7 +13,7 @@ data class Receita(
     @PrimaryKey
     val id : String = UUID.randomUUID().toString(),
     val nome: String,
-    val ingredientes: ArrayList<String>,
+    val ingredientes: List<String>,
     val descricao: String,
     val categoria: String,
     val porcao: Int

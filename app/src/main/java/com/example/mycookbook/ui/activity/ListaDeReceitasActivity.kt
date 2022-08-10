@@ -8,7 +8,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycookbook.CHAVE_RECEITA_ID
-import com.example.mycookbook.FormularioReceitaActivity
 import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityListaDeReceitasBinding
 import com.example.mycookbook.repository.ReceitaRepository

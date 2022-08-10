@@ -9,19 +9,37 @@ import com.example.mycookbook.databinding.IngredienteItemFormularioBinding
 
 class ListaDeIngredientesFormularioAdapter(
     val context : Context,
-    ingredientes : List<String?> = emptyList()
+    ingredientes : List<String> = emptyList(),
+    var quandoClicaEmEditar : (position: String) -> Unit = {},
+    var quandoClicaEmDeletar :(ingrediente: String) -> Unit = {}
 ) :
     RecyclerView.Adapter<ListaDeIngredientesFormularioAdapter.ViewHolderIngredientesFormulario>() {
 
     var listaDeIngredientes = ingredientes.toMutableList()
 
-    class ViewHolderIngredientesFormulario
+    inner class ViewHolderIngredientesFormulario
         (val binding : IngredienteItemFormularioBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-            fun vincula(ingrediente : String?){
-                ingrediente?.let {
-                    binding.textviewNomeIngredienteItemFormulario. text = ingrediente
+        private lateinit var ingrediente : String
+
+        init {
+            binding.apply {
+                imageviewEditIngredienteItemFormulario
+                    .setOnClickListener {
+                        quandoClicaEmEditar(ingrediente)
+                    }
+                imageviewDeleteIngredienteTemFormulario
+                    .setOnClickListener {
+                        quandoClicaEmDeletar(ingrediente)
+                    }
+            }
+        }
+
+            fun vincula(ingrediente : String){
+                this.ingrediente = ingrediente
+                ingrediente.let {
+                    binding.textviewNomeIngredienteItemFormulario. text = it
                 }
             }
 
@@ -42,7 +60,8 @@ class ListaDeIngredientesFormularioAdapter(
     }
 
     override fun getItemCount(): Int = listaDeIngredientes.size
-    fun atualiza(ingredientes: List<String?>) {
+
+    fun atualiza(ingredientes: List<String>) {
         listaDeIngredientes.clear()
         listaDeIngredientes.addAll(ingredientes)
         notifyDataSetChanged()

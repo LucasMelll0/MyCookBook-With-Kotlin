@@ -18,7 +18,7 @@
             android:name=".ui.activity.DetalhesReceitaActivity"
             android:exported="false" />
         <activity
-            android:name=".FormularioReceitaActivity"
+            android:name=".ui.activity.FormularioReceitaActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.ListaDeReceitasActivity"
