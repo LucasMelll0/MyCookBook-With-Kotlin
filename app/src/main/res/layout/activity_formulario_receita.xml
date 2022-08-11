@@ -63,8 +63,8 @@
                     android:id="@+id/edittext_nome_receita"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-                    android:hint="@string/nome_da_receita" />
+                    android:hint="@string/nome_da_receita"
+                    android:maxLength="30" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,10 +73,10 @@
                 android:id="@+id/recycler_view_ingredientes_formulario"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
                 app:layout_constraintEnd_toEndOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintStart_toStartOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintTop_toBottomOf="@id/inputlayout_nome_formulario"
-                android:layout_marginVertical="10dp"
                 tools:itemCount="2"
                 tools:listitem="@layout/ingrediente_item_formulario" />
 
@@ -139,6 +139,7 @@
                 app:layout_constraintEnd_toEndOf="@id/inputlayout_descricao_formulario"
                 app:layout_constraintStart_toStartOf="@id/inputlayout_descricao_formulario"
                 app:layout_constraintTop_toBottomOf="@id/inputlayout_descricao_formulario" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="100dp"
@@ -147,31 +148,29 @@
                 app:layout_constraintEnd_toEndOf="@id/spinner_categoria_receita"
                 app:layout_constraintStart_toStartOf="@id/spinner_categoria_receita"
                 app:layout_constraintTop_toBottomOf="@id/spinner_categoria_receita">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edittext_porcao_receita"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="@string/porcao"
-                    android:inputType="number"
-                    />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_salva_receita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="16dp"
         android:gravity="center_horizontal"
-        android:layout_gravity="bottom|center_horizontal"
-        android:text="@string/salvar_receita"
-         />
+        android:text="@string/salvar_receita" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,5 +13,5 @@ class Converters(){
     }
 
     @TypeConverter
-    fun fromArrayList(list: List<String>) : String = Gson().toJson(list)
+    fun fromList(list: List<String>) : String = Gson().toJson(list)
 }

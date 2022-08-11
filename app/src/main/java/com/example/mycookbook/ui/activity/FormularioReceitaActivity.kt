@@ -3,9 +3,12 @@ package com.example.mycookbook.ui.activity
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mycookbook.R
 import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
@@ -39,20 +42,17 @@ class FormularioReceitaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configuraListaIngredientes()
+        configuraSpinnerCategoria()
         configuraFab()
     }
 
     private fun configuraListaIngredientes() {
         binding.recyclerViewIngredientesFormulario.apply {
             adapter = adapterIngredientes
-            configuraFuncoesAdapter()
             layoutManager = LinearLayoutManager(this@FormularioReceitaActivity)
+            configuraFuncoesAdapter()
         }
-
-
-        configuraCampoIngredientes()
-
-
+        configuraBotaoAdicionaIngrediente()
     }
 
     private fun configuraFuncoesAdapter() {
@@ -69,7 +69,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
         }
     }
 
-    private fun configuraCampoIngredientes() {
+    private fun configuraBotaoAdicionaIngrediente() {
         binding.apply {
             imagebuttonAdicionarIngrediente.setOnClickListener {
                 retornaIngredienteSeForValido()?.let { ingrediente ->
@@ -87,6 +87,23 @@ class FormularioReceitaActivity : AppCompatActivity() {
             null
         }
     }
+
+    private fun configuraSpinnerCategoria(){
+        binding.spinnerCategoriaReceita.apply {
+            val categorias = resources.getStringArray(R.array.categorias_array)
+            Log.i(TAG, "configuraSpinnerCategoria: $categorias")
+            adapter = configuraAdapterSpinner(categorias)
+            //terminar de implementar
+
+        }
+    }
+
+    private fun configuraAdapterSpinner(categorias: Array<out String>) =
+        ArrayAdapter<String>(
+            this@FormularioReceitaActivity,
+            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+            categorias
+        )
 
     private fun configuraFab() {
         fabSalva.setOnClickListener {

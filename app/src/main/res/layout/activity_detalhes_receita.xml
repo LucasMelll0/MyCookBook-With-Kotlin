@@ -19,7 +19,9 @@
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleCollapseMode="fade"
+            app:expandedTitleTextColor="@color/invisible">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageview_detalhes_receita"
@@ -33,52 +35,66 @@
                 android:id="@+id/toolbar_detalhes_receita"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview_nome_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:minWidth="100dp"
+                android:minHeight="50dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="@dimen/cardview_default_elevation"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="8dp"
+                app:layout_collapseMode="parallax"
+                >
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textview_nome_receita_detalhes"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="12dp"
+                    android:maxWidth="200dp"
+                    android:textSize="28sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    tools:text="testes"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
+            </androidx.cardview.widget.CardView>
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:minWidth="100dp"
-        android:minHeight="50dp"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="16dp"
-        app:layout_anchor="@id/appbar_detalhes_receita"
-        app:layout_anchorGravity="bottom|end">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textview_nome_receita_detalhes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="12dp"
-            android:maxWidth="300dp"
-            android:textSize="28sp"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            tools:text="testes" />
-    </androidx.cardview.widget.CardView>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+     >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
+            android:padding="12dp"
+            >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_ingredientes_receita_detalhes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/ingrediente_item_detalhes"
+                tools:itemCount="3"
+                />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/modo_de_preparo_titulo"
@@ -138,6 +154,7 @@
                 android:id="@+id/textview_porcao_receita_detalhes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:textSize="28sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="@id/porcao_titulo"
