@@ -1,18 +1,17 @@
 package com.example.mycookbook.ui.activity
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycookbook.R
+import com.example.mycookbook.TAG
 import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
 import com.example.mycookbook.repository.ReceitaRepository
+import com.example.mycookbook.ui.activity.extensions.adapterPadrao
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesFormularioAdapter
 import kotlinx.coroutines.launch
 
@@ -32,6 +31,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
             ingredientes
         )
     }
+    private val spinnerIngredientes by lazy { binding.spinnerCategoriaReceita }
     private val receitaRepository by lazy {
         ReceitaRepository(
             AppDataBase.instancia(this).ReceitaDAO()
@@ -82,56 +82,51 @@ class FormularioReceitaActivity : AppCompatActivity() {
         }
     }
 
-    private fun retornaIngredienteSeForValido() : String? {
+    private fun retornaIngredienteSeForValido(): String? {
         return campoIngrediente.text.toString().ifBlank {
             null
         }
     }
 
-    private fun configuraSpinnerCategoria(){
-        binding.spinnerCategoriaReceita.apply {
-            val categorias = resources.getStringArray(R.array.categorias_array)
-            Log.i(TAG, "configuraSpinnerCategoria: $categorias")
-            adapter = configuraAdapterSpinner(categorias)
-            //terminar de implementar
+    private fun configuraSpinnerCategoria() {
+        val categorias = resources.getStringArray(R.array.categorias_array)
+        Log.i(TAG, "configuraSpinnerCategoria: $categorias")
+        spinnerIngredientes.adapterPadrao(this, categorias)
 
-        }
     }
-
-    private fun configuraAdapterSpinner(categorias: Array<out String>) =
-        ArrayAdapter<String>(
-            this@FormularioReceitaActivity,
-            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-            categorias
-        )
 
     private fun configuraFab() {
         fabSalva.setOnClickListener {
-            val receita = criaReceita()
-            lifecycleScope.launch {
-                receitaRepository.salva(receita)
-            }
+            salvaReceita()
             finish()
         }
 
     }
 
+    private fun salvaReceita() {
+        val receita = criaReceita()
+        lifecycleScope.launch {
+            receitaRepository.salva(receita)
+        }
+    }
+
     private fun criaReceita(): Receita {
         val nome = campoNome.text.toString()
         val descricao = campoDescricao.text.toString()
-        val porcao = if (!campoPorcao.text.isNullOrBlank()) {
-            campoPorcao.text.toString().toInt()
-        } else {
-            0
-        }
-
+        val porcao = verificaSePorcaoEstaVazio()
         val receita = Receita(
             nome = nome,
             ingredientes = ingredientes.toList(),
             descricao = descricao,
-            categoria = "teste",
+            categoria = spinnerIngredientes.toString(),
             porcao = porcao
         )
         return receita
+    }
+
+    private fun verificaSePorcaoEstaVazio() = if (!campoPorcao.text.isNullOrBlank()) {
+        campoPorcao.text.toString().toInt()
+    } else {
+        0
     }
 }
