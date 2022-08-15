@@ -28,7 +28,6 @@ class DetalhesReceitaActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 repository.buscaPorId(receitaId).collect { receita ->
                     binding.textviewNomeReceitaDetalhes.text = receita.nome
-                    binding.toolbarDetalhesReceita.title = receita.nome
                     configuraRecyclerViewIngredientes(receita.ingredientes)
                     binding.textviewModoDePreparoReceitaDetalhes.text = receita.descricao
                     binding.textviewCategoriaReceitaDetalhes.text = receita.categoria

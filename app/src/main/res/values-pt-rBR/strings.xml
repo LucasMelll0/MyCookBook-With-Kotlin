@@ -13,4 +13,5 @@
     <string name="modo_de_preparo">Modo de Preparo</string>
     <string name="categoria_detalhes">Categoria:</string>
     <string name="porcao_detalhes">Porção:</string>
+    <string name="ingredientes">Ingredientes</string>
 </resources>

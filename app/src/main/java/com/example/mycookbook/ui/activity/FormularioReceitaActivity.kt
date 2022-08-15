@@ -114,14 +114,13 @@ class FormularioReceitaActivity : AppCompatActivity() {
         val nome = campoNome.text.toString()
         val descricao = campoDescricao.text.toString()
         val porcao = verificaSePorcaoEstaVazio()
-        val receita = Receita(
+        return Receita(
             nome = nome,
             ingredientes = ingredientes.toList(),
             descricao = descricao,
-            categoria = spinnerIngredientes.toString(),
+            categoria = spinnerIngredientes.selectedItem.toString(),
             porcao = porcao
         )
-        return receita
     }
 
     private fun verificaSePorcaoEstaVazio() = if (!campoPorcao.text.isNullOrBlank()) {
