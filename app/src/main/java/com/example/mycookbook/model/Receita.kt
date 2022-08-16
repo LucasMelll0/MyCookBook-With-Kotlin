@@ -12,6 +12,7 @@ import kotlin.collections.ArrayList
 data class Receita(
     @PrimaryKey
     val id : String = UUID.randomUUID().toString(),
+    val imagem: String,
     val nome: String,
     val ingredientes: List<String>,
     val descricao: String,

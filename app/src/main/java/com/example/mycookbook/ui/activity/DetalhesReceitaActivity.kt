@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
 import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityDetalhesReceitaBinding
@@ -27,6 +28,7 @@ class DetalhesReceitaActivity : AppCompatActivity() {
         intent.getStringExtra(CHAVE_RECEITA_ID)?.let { receitaId ->
             lifecycleScope.launch {
                 repository.buscaPorId(receitaId).collect { receita ->
+                    binding.imageviewDetalhesReceita.load(receita.imagem)
                     binding.textviewNomeReceitaDetalhes.text = receita.nome
                     configuraRecyclerViewIngredientes(receita.ingredientes)
                     binding.textviewModoDePreparoReceitaDetalhes.text = receita.descricao

@@ -11,7 +11,7 @@ import com.example.mycookbook.model.Receita
 
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [Receita::class],
     exportSchema = true
 )
@@ -30,6 +30,7 @@ abstract class AppDataBase : RoomDatabase() {
                 AppDataBase::class.java,
                 "mycookbook.db"
             )
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }
