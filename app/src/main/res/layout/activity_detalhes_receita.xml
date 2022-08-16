@@ -4,175 +4,160 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.activity.DetalhesReceitaActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_detalhes_receita"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appbar_detalhes_receita"
+        android:layout_height="wrap_content"
+       >
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextColor="@color/invisible"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleCollapseMode="fade">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageview_detalhes_receita"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:srcCompat="@drawable/produto_1" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-70dp"
+        android:background="@drawable/rounded_background"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:padding="12dp">
 
-            <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:titleCollapseMode="fade"
-                app:expandedTitleTextColor="@color/invisible">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imageview_detalhes_receita"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax"
-                    app:srcCompat="@drawable/produto_1" />
-                <androidx.appcompat.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"/>
-            </com.google.android.material.appbar.CollapsingToolbarLayout>
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:background="@drawable/rounded_background"
-            android:layout_marginTop="-70dp"
-            android:layout_marginHorizontal="8dp"
-            app:layout_constraintTop_toBottomOf="@id/appbar_detalhes_receita"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            >
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_nome_receita_detalhes"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                >
+                android:layout_gravity="center"
+                android:layout_margin="12dp"
+                android:ellipsize="end"
+                android:maxWidth="200dp"
+                android:maxLines="2"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="testes" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/textview_nome_receita_detalhes"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="12dp"
-                        android:maxWidth="200dp"
-                        android:textSize="28sp"
-                        android:textAlignment="center"
-                        android:textStyle="bold"
-                        tools:text="testes"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/ingredientes_titulo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/ingredientes"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/recyclerview_ingredientes_receita_detalhes"
-                    app:layout_constraintStart_toStartOf="@id/recyclerview_ingredientes_receita_detalhes"
-                    app:layout_constraintTop_toBottomOf="@id/textview_nome_receita_detalhes" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/ingredientes_titulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/ingredientes"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/recyclerview_ingredientes_receita_detalhes"
+                app:layout_constraintStart_toStartOf="@id/recyclerview_ingredientes_receita_detalhes"
+                app:layout_constraintTop_toBottomOf="@id/textview_nome_receita_detalhes" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_ingredientes_receita_detalhes"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/ingredientes_titulo"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/ingrediente_item_detalhes" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_ingredientes_receita_detalhes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ingredientes_titulo"
+                tools:itemCount="3"
+                tools:listitem="@layout/ingrediente_item_detalhes" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/modo_de_preparo_titulo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/modo_de_preparo"
-                    android:textSize="28sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/recyclerview_ingredientes_receita_detalhes"
-                    app:layout_constraintStart_toStartOf="@id/recyclerview_ingredientes_receita_detalhes"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerview_ingredientes_receita_detalhes" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/modo_de_preparo_titulo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/modo_de_preparo"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/recyclerview_ingredientes_receita_detalhes"
+                app:layout_constraintStart_toStartOf="@id/recyclerview_ingredientes_receita_detalhes"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_ingredientes_receita_detalhes" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textview_modo_de_preparo_receita_detalhes"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@id/modo_de_preparo_titulo"
-                    app:layout_constraintStart_toStartOf="@id/modo_de_preparo_titulo"
-                    app:layout_constraintTop_toBottomOf="@id/modo_de_preparo_titulo"
-                    tools:text="testes" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_modo_de_preparo_receita_detalhes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/modo_de_preparo_titulo"
+                app:layout_constraintStart_toStartOf="@id/modo_de_preparo_titulo"
+                app:layout_constraintTop_toBottomOf="@id/modo_de_preparo_titulo"
+                tools:text="testes" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/categoria_titulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/categoria_detalhes"
-                    android:textSize="28sp"
-                    app:layout_constraintStart_toStartOf="@id/textview_modo_de_preparo_receita_detalhes"
-                    app:layout_constraintTop_toBottomOf="@id/textview_modo_de_preparo_receita_detalhes" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/categoria_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/categoria_detalhes"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="@id/textview_modo_de_preparo_receita_detalhes"
+                app:layout_constraintTop_toBottomOf="@id/textview_modo_de_preparo_receita_detalhes" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textview_categoria_receita_detalhes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textSize="28sp"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toBottomOf="@id/categoria_titulo"
-                    app:layout_constraintStart_toEndOf="@id/categoria_titulo"
-                    app:layout_constraintTop_toTopOf="@id/categoria_titulo"
-                    tools:text="Testes" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_categoria_receita_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="28sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@id/categoria_titulo"
+                app:layout_constraintStart_toEndOf="@id/categoria_titulo"
+                app:layout_constraintTop_toTopOf="@id/categoria_titulo"
+                tools:text="Testes" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/porcao_titulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/porcao_detalhes"
-                    android:textSize="28sp"
-                    app:layout_constraintStart_toStartOf="@id/categoria_titulo"
-                    app:layout_constraintTop_toBottomOf="@id/categoria_titulo" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/porcao_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/porcao_detalhes"
+                android:textSize="28sp"
+                app:layout_constraintStart_toStartOf="@id/categoria_titulo"
+                app:layout_constraintTop_toBottomOf="@id/categoria_titulo" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textview_porcao_receita_detalhes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:textSize="28sp"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toBottomOf="@id/porcao_titulo"
-                    app:layout_constraintStart_toEndOf="@id/porcao_titulo"
-                    app:layout_constraintTop_toTopOf="@id/porcao_titulo"
-                    tools:text="10" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textview_porcao_receita_detalhes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textSize="28sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@id/porcao_titulo"
+                app:layout_constraintStart_toEndOf="@id/porcao_titulo"
+                app:layout_constraintTop_toTopOf="@id/porcao_titulo"
+                tools:text="10" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
