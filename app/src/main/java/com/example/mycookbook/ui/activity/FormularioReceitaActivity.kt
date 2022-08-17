@@ -3,9 +3,7 @@ package com.example.mycookbook.ui.activity
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
@@ -17,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.example.mycookbook.CHAVE_RECEITA_ID
 import com.example.mycookbook.R
 import com.example.mycookbook.TAG
 import com.example.mycookbook.database.AppDataBase
@@ -30,7 +29,8 @@ import kotlinx.coroutines.launch
 class FormularioReceitaActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityFormularioReceitaBinding.inflate(layoutInflater) }
-    private var imagem = ""
+    private var receitaId: String? = null
+    private var imagem: String? = null
     private val campoNome by lazy { binding.edittextNomeReceita }
     private val campoIngrediente by lazy { binding.edittextIngredienteReceita }
     private val campoDescricao by lazy { binding.edittextDescricaoReceita }
@@ -77,30 +77,49 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private val resultGaleria = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { resultado ->
-        if(resultado.data?.data != null){
-            val bitmap = if (Build.VERSION.SDK_INT < 28) {
-                MediaStore.Images.Media.getBitmap(
-                    baseContext.contentResolver,
-                    resultado.data?.data
-                )
-            } else {
-                val source = ImageDecoder.createSource(
-                    this.contentResolver,
-                    resultado.data?.data!!
-                )
-                ImageDecoder.decodeBitmap(source)
-            }
-            binding.imageviewFormularioReceita.load(bitmap)
+        if (resultado.data?.data != null) {
+            val uri = resultado.data?.data
+            Log.i(TAG, "resultado da galeria: ${resultado.data?.data}")
+            binding.imageviewFormularioReceita.load(uri)
+            imagem = uri.toString()
+
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        verificaSeTemExtras()
         configuraImagem()
         configuraListaIngredientes()
         configuraSpinnerCategoria()
         configuraFab()
+    }
+
+    private fun verificaSeTemExtras() {
+        intent.getStringExtra(CHAVE_RECEITA_ID)?.let { idReceita ->
+            lifecycleScope.launch {
+                carregaReceita(idReceita)
+            }
+        }
+    }
+
+    private suspend fun carregaReceita(idReceita: String) {
+        receitaRepository.buscaPorId(idReceita).collect { receita ->
+            binding.apply {
+                receitaId = receita.id
+                imageviewFormularioReceita.load(receita.imagem)
+                imagem = receita.imagem
+                edittextNomeReceita.setText(receita.nome)
+                ingredientes.addAll(receita.ingredientes)
+                edittextDescricaoReceita.setText(receita.descricao)
+                val categorias = resources.getStringArray(R.array.categorias_array)
+                spinnerCategoriaReceita.setSelection(categorias.indexOf(receita.categoria))
+                edittextPorcaoReceita.setText(receita.porcao.toString())
+                adapterIngredientes.atualiza(ingredientes)
+
+            }
+        }
     }
 
     private fun configuraImagem() {
@@ -169,14 +188,27 @@ class FormularioReceitaActivity : AppCompatActivity() {
         }
     }
 
-    private fun criaReceita() = Receita(
-        imagem = imagem,
-        nome = campoNome.text.toString(),
-        ingredientes = ingredientes.toList(),
-        descricao = campoDescricao.text.toString(),
-        categoria = spinnerIngredientes.selectedItem.toString(),
-        porcao = verificaSePorcaoEstaVazio()
-    )
+    private fun criaReceita(): Receita {
+        receitaId?.let {
+            return Receita(
+                id = receitaId.toString(),
+                imagem = imagem ?: "",
+                nome = campoNome.text.toString(),
+                ingredientes = ingredientes.toList(),
+                descricao = campoDescricao.text.toString(),
+                categoria = spinnerIngredientes.selectedItem.toString(),
+                porcao = verificaSePorcaoEstaVazio()
+            )
+        }
+        return Receita(
+            imagem = imagem ?: "",
+            nome = campoNome.text.toString(),
+            ingredientes = ingredientes.toList(),
+            descricao = campoDescricao.text.toString(),
+            categoria = spinnerIngredientes.selectedItem.toString(),
+            porcao = verificaSePorcaoEstaVazio()
+        )
+    }
 
     private fun verificaSePorcaoEstaVazio() = if (!campoPorcao.text.isNullOrBlank()) {
         campoPorcao.text.toString().toInt()
@@ -208,8 +240,8 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private fun mostraDialogPermissao() {
         val builder = AlertDialog.Builder(this)
             .setTitle(getString(R.string.atencao))
-            .setMessage("É preciso a permissão para o acesso à galeria!!")
-            .setPositiveButton("Permitir") { _, _ ->
+            .setMessage(getString(R.string.mensagem_permissão_galeria))
+            .setPositiveButton(getString(R.string.permitir)) { _, _ ->
                 Intent(
                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                     Uri.fromParts("package", packageName, null)
@@ -219,7 +251,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
                 }
                 dialogPermissaoGaleria.dismiss()
             }
-            .setNegativeButton("Negar") { _, _ ->
+            .setNegativeButton(getString(R.string.Negar)) { _, _ ->
                 dialogPermissaoGaleria.dismiss()
             }
 
@@ -231,5 +263,6 @@ class FormularioReceitaActivity : AppCompatActivity() {
     // Verificador de Permissão genérico
     private fun verificaPermissao(permissao: String) =
         ContextCompat.checkSelfPermission(this, permissao) == PackageManager.PERMISSION_GRANTED
+
 
 }

@@ -11,11 +11,13 @@
         android:id="@+id/appbar_detalhes_receita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       >
+        android:backgroundTint="@color/invisible"
+        >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/invisible"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextColor="@color/invisible"
@@ -36,11 +38,10 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-70dp"
+        android:layout_marginTop="-50dp"
         android:background="@drawable/rounded_background"
         android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,15 +51,14 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textview_nome_receita_detalhes"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="12dp"
                 android:ellipsize="end"
-                android:maxWidth="200dp"
                 android:maxLines="2"
                 android:textAlignment="center"
-                android:textSize="28sp"
+                android:textSize="32sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -154,10 +154,18 @@
                 app:layout_constraintTop_toTopOf="@id/porcao_titulo"
                 tools:text="10" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_editar_detalhes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:text="@string/editar"
+        app:icon="@drawable/ic_edit"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

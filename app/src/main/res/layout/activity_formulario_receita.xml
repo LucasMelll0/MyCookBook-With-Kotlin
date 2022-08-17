@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.FormularioReceitaActivity">
+    tools:context=".ui.activity.FormularioReceitaActivity"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_formulario_receita"
@@ -42,7 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@drawable/rounded_background"
+        android:layout_marginTop="-50dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -115,7 +118,8 @@
                 android:id="@+id/inputlayout_descricao_formulario"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
+                android:minHeight="60dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintStart_toStartOf="@id/inputlayout_nome_formulario"
@@ -165,12 +169,14 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_salva_receita"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:gravity="center_horizontal"
-        android:text="@string/salvar_receita" />
+        android:text="@string/salvar"
+        app:icon="@drawable/ic_save"
+        />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

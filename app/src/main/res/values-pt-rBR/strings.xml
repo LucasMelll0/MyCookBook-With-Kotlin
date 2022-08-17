@@ -7,11 +7,15 @@
     <string name="insira_ingredientes_aqui">Insira os ingredientes aqui!!</string>
     <string name="descricao_da_receita">Descrição da Receita</string>
     <string name="porcao">Porção</string>
-    <string name="salvar_receita">Salvar Receita</string>
     <string name="editar">editar</string>
     <string name="deletar">deletar</string>
     <string name="modo_de_preparo">Modo de Preparo</string>
     <string name="categoria_detalhes">Categoria:</string>
     <string name="porcao_detalhes">Porção:</string>
     <string name="ingredientes">Ingredientes</string>
+    <string name="atencao">Atenção!!</string>
+    <string name="mensagem_permissão_galeria">É necessário permissão para acessar a galeria!!</string>
+    <string name="permitir">Permitir</string>
+    <string name="Negar">Negar</string>
+    <string name="salvar">Salvar</string>
 </resources>

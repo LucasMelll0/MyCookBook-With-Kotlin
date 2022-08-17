@@ -39,4 +39,10 @@ class ListaDeIngredientesDetalhesAdapter(
     }
 
     override fun getItemCount(): Int = ingredientesDetalhes.size
+
+    fun atualiza(ingredientes: List<String>){
+        ingredientesDetalhes.clear()
+        ingredientesDetalhes.addAll(ingredientes)
+        notifyDataSetChanged()
+    }
 }

@@ -6,7 +6,6 @@
     <string name="insira_ingredientes_aqui">Insert ingredients here!!</string>
     <string name="descricao_da_receita">Description of Recipe</string>
     <string name="porcao">Portion</string>
-    <string name="salvar_receita">SAVE RECIPE</string>
     <string name="editar">edit</string>
     <string name="deletar">delete</string>
     <string name="modo_de_preparo">How to Do</string>
@@ -14,4 +13,8 @@
     <string name="porcao_detalhes">Portion:</string>
     <string name="ingredientes">Ingredients</string>
     <string name="atencao">Attention!!</string>
+    <string name="mensagem_permissão_galeria">We need permission to access the galery!!</string>
+    <string name="permitir">Allow</string>
+    <string name="Negar">Not Allow</string>
+    <string name="salvar">Save</string>
 </resources>

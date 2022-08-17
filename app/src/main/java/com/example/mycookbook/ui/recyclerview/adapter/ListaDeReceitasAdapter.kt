@@ -3,9 +3,11 @@ package com.example.mycookbook.ui.recyclerview.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.mycookbook.R
 import com.example.mycookbook.databinding.ReceitaItemBinding
 import com.example.mycookbook.model.Receita
@@ -56,6 +58,11 @@ class ListaDeReceitasAdapter(
         fun vincula(receita: Receita) {
             this.receita = receita
             binding.apply {
+                if(receita.imagem.isBlank()) {
+                    imageviewItemReceita.visibility = View.GONE
+                } else{
+                    imageviewItemReceita.load(receita.imagem)
+                }
                 textviewItemNomeReceita.text = receita.nome
                 textviewItemDescricaoReceita.text = receita.descricao
             }
@@ -79,7 +86,7 @@ class ListaDeReceitasAdapter(
     }
 
     override fun onBindViewHolder(holder: ListaDeReceitasAdapter.ViewHolderReceita, position: Int) {
-        var receita = dataSet[position]
+        val receita = dataSet[position]
         holder.vincula(receita)
     }
 
