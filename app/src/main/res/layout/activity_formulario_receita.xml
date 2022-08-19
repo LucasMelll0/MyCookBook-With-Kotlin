@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.FormularioReceitaActivity"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.activity.FormularioReceitaActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_formulario_receita"
@@ -16,11 +16,12 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/invisible"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageview_formulario_receita"
@@ -30,11 +31,6 @@
                 app:layout_collapseMode="parallax"
                 app:srcCompat="@drawable/imagem_padrao" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_formulario_receita"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -42,10 +38,10 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="-50dp"
         android:background="@drawable/rounded_background"
-        android:layout_marginTop="-50dp">
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -58,6 +54,10 @@
                 android:layout_height="60dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginVertical="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -66,6 +66,7 @@
                     android:id="@+id/edittext_nome_receita"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:inputType="textCapWords"
                     android:hint="@string/nome_da_receita"
                     android:maxLength="30" />
 
@@ -89,6 +90,10 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_marginVertical="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
                 app:layout_constraintEnd_toStartOf="@id/imagebutton_adicionar_ingrediente"
                 app:layout_constraintStart_toStartOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintTop_toBottomOf="@id/recycler_view_ingredientes_formulario">
@@ -119,8 +124,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="60dp"
                 android:layout_marginTop="16dp"
+                android:minHeight="60dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
                 app:layout_constraintEnd_toEndOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintStart_toStartOf="@id/inputlayout_nome_formulario"
                 app:layout_constraintTop_toBottomOf="@id/inputlayout_ingredientes_formulario">
@@ -149,6 +158,11 @@
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="16dp"
+                app:boxCornerRadiusBottomStart="16dp"
+                app:boxCornerRadiusBottomEnd="16dp"
+                app:boxCornerRadiusTopStart="16dp"
+                app:boxCornerRadiusTopEnd="16dp"
+
                 app:layout_constraintEnd_toEndOf="@id/spinner_categoria_receita"
                 app:layout_constraintStart_toStartOf="@id/spinner_categoria_receita"
                 app:layout_constraintTop_toBottomOf="@id/spinner_categoria_receita">
@@ -175,8 +189,7 @@
         android:layout_margin="16dp"
         android:gravity="center_horizontal"
         android:text="@string/salvar"
-        app:icon="@drawable/ic_save"
-        />
+        app:icon="@drawable/ic_save" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

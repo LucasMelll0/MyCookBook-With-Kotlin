@@ -108,7 +108,9 @@ class FormularioReceitaActivity : AppCompatActivity() {
         receitaRepository.buscaPorId(idReceita).collect { receita ->
             binding.apply {
                 receitaId = receita.id
-                imageviewFormularioReceita.load(receita.imagem)
+                imageviewFormularioReceita.load(receita.imagem){
+                    error(R.drawable.imagem_padrao)
+                }
                 imagem = receita.imagem
                 edittextNomeReceita.setText(receita.nome)
                 ingredientes.addAll(receita.ingredientes)
