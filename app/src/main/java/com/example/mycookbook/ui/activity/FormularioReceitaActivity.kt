@@ -31,10 +31,6 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private val binding by lazy { ActivityFormularioReceitaBinding.inflate(layoutInflater) }
     private var receitaId: String? = null
     private var imagem: String? = null
-    private val campoNome by lazy { binding.edittextNomeReceita }
-    private val campoIngrediente by lazy { binding.edittextIngredienteReceita }
-    private val campoDescricao by lazy { binding.edittextDescricaoReceita }
-    private val campoPorcao by lazy { binding.edittextPorcaoReceita }
     private val fabSalva by lazy { binding.fabSalvaReceita }
     private val ingredientes by lazy { mutableListOf<String>() }
     private val adapterIngredientes by lazy {
@@ -99,28 +95,33 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private fun verificaSeTemExtras() {
         intent.getStringExtra(CHAVE_RECEITA_ID)?.let { idReceita ->
             lifecycleScope.launch {
-                carregaReceita(idReceita)
+                buscaReceitaNoBd(idReceita)
             }
         }
     }
 
-    private suspend fun carregaReceita(idReceita: String) {
-        receitaRepository.buscaPorId(idReceita).collect { receita ->
-            binding.apply {
-                receitaId = receita.id
-                imageviewFormularioReceita.load(receita.imagem){
-                    error(R.drawable.imagem_padrao)
-                }
-                imagem = receita.imagem
-                edittextNomeReceita.setText(receita.nome)
-                ingredientes.addAll(receita.ingredientes)
-                edittextDescricaoReceita.setText(receita.descricao)
-                val categorias = resources.getStringArray(R.array.categorias_array)
-                spinnerCategoriaReceita.setSelection(categorias.indexOf(receita.categoria))
-                edittextPorcaoReceita.setText(receita.porcao.toString())
-                adapterIngredientes.atualiza(ingredientes)
-
+    private suspend fun buscaReceitaNoBd(idReceita: String) {
+        receitaRepository.buscaPorId(idReceita).collect {
+            it?.let { receita ->
+                preencheCampos(receita)
             }
+        }
+    }
+
+    private fun preencheCampos(receita: Receita) {
+        binding.apply {
+            receitaId = receita.id
+            imageviewFormularioReceita.load(receita.imagem) {
+                error(R.drawable.imagem_padrao)
+            }
+            imagem = receita.imagem
+            edittextNomeReceita.setText(receita.nome)
+            ingredientes.addAll(receita.ingredientes)
+            edittextDescricaoReceita.setText(receita.descricao)
+            val categorias = resources.getStringArray(R.array.categorias_array)
+            spinnerCategoriaReceita.setSelection(categorias.indexOf(receita.categoria))
+            edittextPorcaoReceita.setText(receita.porcao.toString())
+            adapterIngredientes.atualiza(ingredientes)
         }
     }
 
@@ -159,16 +160,17 @@ class FormularioReceitaActivity : AppCompatActivity() {
                 retornaIngredienteSeForValido()?.let { ingrediente ->
                     ingredientes.add(ingrediente)
                     adapterIngredientes.atualiza(ingredientes)
-                    campoIngrediente.text?.clear()
+                    edittextIngredienteReceita.text?.clear()
                     Log.i(TAG, "configuraCampoIngredientes: $ingredientes")
                 }
             }
         }
     }
 
-    private fun retornaIngredienteSeForValido() = campoIngrediente.text.toString().ifBlank {
-        null
-    }
+    private fun retornaIngredienteSeForValido() =
+        binding.edittextIngredienteReceita.text.toString().ifBlank {
+            null
+        }
 
     private fun configuraSpinnerCategoria() {
         val categorias = resources.getStringArray(R.array.categorias_array)
@@ -192,31 +194,36 @@ class FormularioReceitaActivity : AppCompatActivity() {
 
     private fun criaReceita(): Receita {
         receitaId?.let {
+            binding.apply {
+                return Receita(
+                    id = receitaId.toString(),
+                    imagem = imagem ?: "",
+                    nome = edittextNomeReceita.text.toString(),
+                    ingredientes = ingredientes.toList(),
+                    descricao = edittextDescricaoReceita.text.toString(),
+                    categoria = spinnerIngredientes.selectedItem.toString(),
+                    porcao = verificaSePorcaoEstaVazio()
+                )
+            }
+        }
+        binding.apply {
             return Receita(
-                id = receitaId.toString(),
                 imagem = imagem ?: "",
-                nome = campoNome.text.toString(),
+                nome = edittextNomeReceita.text.toString(),
                 ingredientes = ingredientes.toList(),
-                descricao = campoDescricao.text.toString(),
+                descricao = edittextDescricaoReceita.text.toString(),
                 categoria = spinnerIngredientes.selectedItem.toString(),
                 porcao = verificaSePorcaoEstaVazio()
             )
         }
-        return Receita(
-            imagem = imagem ?: "",
-            nome = campoNome.text.toString(),
-            ingredientes = ingredientes.toList(),
-            descricao = campoDescricao.text.toString(),
-            categoria = spinnerIngredientes.selectedItem.toString(),
-            porcao = verificaSePorcaoEstaVazio()
-        )
     }
 
-    private fun verificaSePorcaoEstaVazio() = if (!campoPorcao.text.isNullOrBlank()) {
-        campoPorcao.text.toString().toInt()
-    } else {
-        0
-    }
+    private fun verificaSePorcaoEstaVazio() =
+        if (!binding.edittextPorcaoReceita.text.isNullOrBlank()) {
+            binding.edittextPorcaoReceita.text.toString().toInt()
+        } else {
+            0
+        }
 
     private fun verificaPermissaoGaleria() {
         val permissaoGaleriaAceita = verificaPermissao(permissaoGaleria)

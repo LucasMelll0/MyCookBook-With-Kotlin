@@ -6,24 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="14dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="8dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    android:focusable="true"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imageview_item_receita"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cadview_item_receita"
             android:layout_width="0dp"
             android:layout_height="300dp"
-            android:scaleType="centerCrop"
             app:layout_constraintBottom_toTopOf="@id/textview_item_nome_receita"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/produto_1" />
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageview_item_receita"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+
+                app:srcCompat="@drawable/produto_1" />
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textview_item_nome_receita"
@@ -34,7 +46,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageview_item_receita"
+            app:layout_constraintTop_toBottomOf="@id/cadview_item_receita"
             tools:text="Nome da Receita" />
 
         <androidx.appcompat.widget.AppCompatTextView

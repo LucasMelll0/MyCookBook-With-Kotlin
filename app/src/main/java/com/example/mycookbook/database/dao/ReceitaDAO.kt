@@ -15,7 +15,7 @@ interface ReceitaDAO {
     fun buscaTodas() : Flow<List<Receita>>
 
     @Query("SELECT * FROM Receita WHERE id = :id")
-    fun buscaPorId(id: String) : Flow<Receita>
+    fun buscaPorId(id: String) : Flow<Receita?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addReceita(receita: Receita)

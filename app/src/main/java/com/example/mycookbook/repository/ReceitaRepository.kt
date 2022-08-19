@@ -12,7 +12,7 @@ class ReceitaRepository(private val dao : ReceitaDAO) {
 
     suspend fun deleta(receita: Receita) = dao.deletaReceita(receita)
 
-    fun buscaPorId(id: String) : Flow<Receita> = dao.buscaPorId(id)
+    fun buscaPorId(id: String) : Flow<Receita?> = dao.buscaPorId(id)
 
 
 }

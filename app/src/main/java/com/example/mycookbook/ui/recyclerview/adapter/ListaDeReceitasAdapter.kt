@@ -59,7 +59,7 @@ class ListaDeReceitasAdapter(
             this.receita = receita
             binding.apply {
                 if(receita.imagem.isBlank()) {
-                    imageviewItemReceita.visibility = View.GONE
+                    cadviewItemReceita.visibility = View.GONE
                 } else{
                     imageviewItemReceita.load(receita.imagem)
                 }
