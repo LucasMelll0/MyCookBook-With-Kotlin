@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,19 +22,20 @@ import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
 import com.example.mycookbook.R
 import com.example.mycookbook.TAG
-import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
-import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.adapterPadrao
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesFormularioAdapter
 import com.example.mycookbook.ui.viewmodel.FormReceitaViewModel
+import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
+import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
 import kotlinx.coroutines.launch
 
 class FormularioReceitaActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityFormularioReceitaBinding.inflate(layoutInflater) }
     private val viewModel: FormReceitaViewModel by viewModels()
+    private lateinit var model: ReceitaViewModel
     private var receitaId: String? = null
     private var imagem: String? = null
     private val fabSalva by lazy { binding.fabSalvaReceita }
@@ -45,11 +47,6 @@ class FormularioReceitaActivity : AppCompatActivity() {
         )
     }
     private val spinnerIngredientes by lazy { binding.spinnerCategoriaReceita }
-    private val receitaRepository by lazy {
-        ReceitaRepository(
-            AppDataBase.instancia(this).ReceitaDAO()
-        )
-    }
 
     companion object {
         // Pega a permissão de leitura de armazenamento
@@ -99,11 +96,21 @@ class FormularioReceitaActivity : AppCompatActivity() {
     }
 
     private fun configuraViewModel() {
+        configuraFormReceitaViewModel()
+        configuraReceitaViewModel()
+    }
+
+    private fun configuraReceitaViewModel() {
+        val modelFactory = ReceitaViewModelFactory(application)
+        model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
+    }
+
+    private fun configuraFormReceitaViewModel() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED){
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.uiState.collect { state ->
-                    state.listaIngredienteValue?.let {
-                        ingredientes.addAll(state.listaIngredienteValue)
+                    state.listaIngredienteValue?.let { listaDeIngredientes ->
+                        ingredientes.addAll(listaDeIngredientes)
                         adapterIngredientes.atualiza(ingredientes)
                     }
                 }
@@ -125,10 +132,10 @@ class FormularioReceitaActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun buscaReceitaNoBd(idReceita: String) {
-        receitaRepository.buscaPorId(idReceita).collect {
-            it?.let { receita ->
-                preencheCampos(receita)
+    private fun buscaReceitaNoBd(idReceita: String) {
+        model.buscaPorId(idReceita).observe(this) { receita ->
+            receita?.let {
+                preencheCampos(it)
             }
         }
     }
@@ -213,7 +220,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private fun salvaReceita() {
         val receita = criaReceita()
         lifecycleScope.launch {
-            receitaRepository.salva(receita)
+            model.salva(receita)
         }
     }
 

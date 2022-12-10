@@ -1,8 +1,8 @@
 package com.example.mycookbook.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.mycookbook.model.Receita
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReceitaDAO {
@@ -12,10 +12,13 @@ interface ReceitaDAO {
     suspend fun deletaReceita(receita: Receita)
 
     @Query("SELECT * FROM Receita")
-    fun buscaTodas() : Flow<List<Receita>>
+    fun buscaTodasLiveData(): LiveData<List<Receita>>
+
+    @Query("SELECT * FROM Receita")
+    suspend fun buscaTodas(): List<Receita>
 
     @Query("SELECT * FROM Receita WHERE id = :id")
-    fun buscaPorId(id: String) : Flow<Receita?>
+    fun buscaPorId(id: String): LiveData<Receita?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addReceita(receita: Receita)

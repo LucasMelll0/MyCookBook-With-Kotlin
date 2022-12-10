@@ -1,18 +1,17 @@
 package com.example.mycookbook.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
-import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityDetalhesReceitaBinding
 import com.example.mycookbook.model.Receita
-import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesDetalhesAdapter
-import kotlinx.coroutines.launch
+import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
+import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
 
 class DetalhesReceitaActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDetalhesReceitaBinding.inflate(layoutInflater) }
@@ -20,17 +19,20 @@ class DetalhesReceitaActivity : AppCompatActivity() {
     private val adapterIngredientes by lazy {
         ListaDeIngredientesDetalhesAdapter(this@DetalhesReceitaActivity)
     }
-    private val repository by lazy {
-        ReceitaRepository(
-            AppDataBase.instancia(this).ReceitaDAO()
-        )
-    }
+    private lateinit var model: ReceitaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setsUpViewModel()
         verificaSeVeioExtras()
         configuraFabEditar()
+    }
+
+    private fun setsUpViewModel() {
+        val modelFactory = ReceitaViewModelFactory(application)
+        model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
+
     }
 
     override fun onResume() {
@@ -53,13 +55,13 @@ class DetalhesReceitaActivity : AppCompatActivity() {
         } ?: finish()
     }
 
-    private fun buscaReceitaNoDb(receitaId: String) = lifecycleScope.launch {
-        repository.buscaPorId(receitaId).collect { it ->
-            it?.let { receita ->
+    private fun buscaReceitaNoDb(receitaId: String) =
+        model.buscaPorId(receitaId).observe(this@DetalhesReceitaActivity) { receita ->
+            receita?.let {
                 preencheReceita(receita)
             }
         }
-    }
+
 
     private fun preencheReceita(receita: Receita) {
         binding.imageviewDetalhesReceita.load(receita.imagem)

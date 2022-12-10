@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
+            app:cardElevation="@dimen/cardview_default_elevation">
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageview_item_receita"
                 android:layout_width="match_parent"

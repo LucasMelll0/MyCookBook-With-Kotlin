@@ -6,6 +6,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.mycookbook.R
@@ -14,13 +16,24 @@ import com.example.mycookbook.model.Receita
 
 class ListaDeReceitasAdapter(
     private val context: Context,
-    listaDeReceitas: List<Receita> = emptyList(),
     var quandoClica: (receita: Receita) -> Unit = {},
     var quandoClicaEmEditar: (receita: Receita) -> Unit = {},
     var quandoClicaEmDeletar: (receita: Receita) -> Unit = {}
-) : RecyclerView.Adapter<ListaDeReceitasAdapter.ViewHolderReceita>() {
+) : ListAdapter<Receita, ListaDeReceitasAdapter.ViewHolderReceita>(differCallBack) {
 
-    private val dataSet = listaDeReceitas.toMutableList()
+    companion object {
+        private val differCallBack = object : DiffUtil.ItemCallback<Receita>() {
+            override fun areItemsTheSame(oldItem: Receita, newItem: Receita): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Receita, newItem: Receita): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -86,16 +99,9 @@ class ListaDeReceitasAdapter(
     }
 
     override fun onBindViewHolder(holder: ListaDeReceitasAdapter.ViewHolderReceita, position: Int) {
-        val receita = dataSet[position]
+        val receita = getItem(position)
         holder.vincula(receita)
     }
 
-    override fun getItemCount(): Int = dataSet.size
-
-    fun atualiza(todas: List<Receita>) {
-        dataSet.clear()
-        dataSet.addAll(todas)
-        notifyDataSetChanged()
-    }
 
 }
