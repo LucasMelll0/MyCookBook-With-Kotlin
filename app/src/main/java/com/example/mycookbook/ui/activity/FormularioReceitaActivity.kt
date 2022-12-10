@@ -9,10 +9,13 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
@@ -24,11 +27,13 @@ import com.example.mycookbook.model.Receita
 import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.adapterPadrao
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesFormularioAdapter
+import com.example.mycookbook.ui.viewmodel.FormReceitaViewModel
 import kotlinx.coroutines.launch
 
 class FormularioReceitaActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityFormularioReceitaBinding.inflate(layoutInflater) }
+    private val viewModel: FormReceitaViewModel by viewModels()
     private var receitaId: String? = null
     private var imagem: String? = null
     private val fabSalva by lazy { binding.fabSalvaReceita }
@@ -75,7 +80,6 @@ class FormularioReceitaActivity : AppCompatActivity() {
     ) { resultado ->
         if (resultado.data?.data != null) {
             val uri = resultado.data?.data
-            Log.i(TAG, "resultado da galeria: ${resultado.data?.data}")
             binding.imageviewFormularioReceita.load(uri)
             imagem = uri.toString()
 
@@ -85,12 +89,33 @@ class FormularioReceitaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        Log.i(TAG, "onCreate: $ingredientes")
+        configuraViewModel()
         verificaSeTemExtras()
         configuraImagem()
         configuraListaIngredientes()
         configuraSpinnerCategoria()
         configuraFab()
     }
+
+    private fun configuraViewModel() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.uiState.collect { state ->
+                    state.listaIngredienteValue?.let {
+                        ingredientes.addAll(state.listaIngredienteValue)
+                        adapterIngredientes.atualiza(ingredientes)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.salvaListaIngredientes(ingredientes)
+    }
+
 
     private fun verificaSeTemExtras() {
         intent.getStringExtra(CHAVE_RECEITA_ID)?.let { idReceita ->
