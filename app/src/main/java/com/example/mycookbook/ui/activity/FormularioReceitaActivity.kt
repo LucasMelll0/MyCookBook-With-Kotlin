@@ -2,7 +2,6 @@ package com.example.mycookbook.ui.activity
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -12,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -22,13 +20,16 @@ import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
 import com.example.mycookbook.R
 import com.example.mycookbook.TAG
+import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
+import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.adapterPadrao
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesFormularioAdapter
 import com.example.mycookbook.ui.viewmodel.FormReceitaViewModel
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
+import com.example.mycookbook.utilities.verificaPermissao
 import kotlinx.coroutines.launch
 
 class FormularioReceitaActivity : AppCompatActivity() {
@@ -101,7 +102,8 @@ class FormularioReceitaActivity : AppCompatActivity() {
     }
 
     private fun configuraReceitaViewModel() {
-        val modelFactory = ReceitaViewModelFactory(application)
+        val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
+        val modelFactory = ReceitaViewModelFactory(repository)
         model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
     }
 
@@ -258,10 +260,9 @@ class FormularioReceitaActivity : AppCompatActivity() {
         }
 
     private fun verificaPermissaoGaleria() {
-        val permissaoGaleriaAceita = verificaPermissao(permissaoGaleria)
+        val permissaoGaleriaAceita = verificaPermissao(this, permissaoGaleria)
 
         when {
-            // Se a permissão da galeria tiver sido aceita, abre a galeria, ee pega o resultado da galeria através do resultGaleria.
             permissaoGaleriaAceita -> {
                 resultGaleria.launch(
                     Intent(
@@ -270,10 +271,8 @@ class FormularioReceitaActivity : AppCompatActivity() {
                     )
                 )
             }
-            //Mostra o dialog para aceitar a permissão da galeria
             shouldShowRequestPermissionRationale(permissaoGaleria) -> mostraDialogPermissao()
 
-            //Se não tiver sido aceito faz um request da permissão da galeria através do requestGaleria.
             else -> requestGaleria.launch(permissaoGaleria)
         }
     }
@@ -299,11 +298,4 @@ class FormularioReceitaActivity : AppCompatActivity() {
         dialogPermissaoGaleria = builder.create()
         dialogPermissaoGaleria.show()
     }
-
-
-    // Verificador de Permissão genérico
-    private fun verificaPermissao(permissao: String) =
-        ContextCompat.checkSelfPermission(this, permissao) == PackageManager.PERMISSION_GRANTED
-
-
 }

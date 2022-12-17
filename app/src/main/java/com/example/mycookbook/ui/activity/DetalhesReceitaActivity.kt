@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
+import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityDetalhesReceitaBinding
 import com.example.mycookbook.model.Receita
+import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesDetalhesAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
@@ -30,7 +32,8 @@ class DetalhesReceitaActivity : AppCompatActivity() {
     }
 
     private fun setsUpViewModel() {
-        val modelFactory = ReceitaViewModelFactory(application)
+        val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
+        val modelFactory = ReceitaViewModelFactory(repository)
         model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
 
     }

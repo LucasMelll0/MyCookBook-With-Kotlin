@@ -9,7 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycookbook.CHAVE_RECEITA_ID
+import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityListaDeReceitasBinding
+import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeReceitasAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
@@ -32,8 +34,9 @@ class ListaDeReceitasActivity : AppCompatActivity() {
     }
 
     private fun setsUpViewModel() {
-        val modelFactory = ReceitaViewModelFactory(application)
-        model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
+        val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
+        val modelFactory = ReceitaViewModelFactory(repository)
+        model = ViewModelProvider(this, modelFactory)[ReceitaViewModel::class.java]
         configuraRecyclerView()
     }
 
@@ -58,7 +61,7 @@ class ListaDeReceitasActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 lifecycleScope.launch {
-                    model.todaReceitas().also { receitas -> adapter.submitList(receitas) }
+                    model.todasReceitas().also { receitas -> adapter.submitList(receitas) }
                 }
                 model.todasReceitasLiveData.observe(this@ListaDeReceitasActivity) { receitas ->
                     adapter.submitList(receitas)
