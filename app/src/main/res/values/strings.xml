@@ -17,4 +17,5 @@
     <string name="permitir">Allow</string>
     <string name="Negar">Not Allow</string>
     <string name="salvar">Save</string>
+    <string name="pesquisar">Search</string>
 </resources>

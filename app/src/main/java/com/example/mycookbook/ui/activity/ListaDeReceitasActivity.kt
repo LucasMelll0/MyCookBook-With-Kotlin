@@ -3,12 +3,14 @@ package com.example.mycookbook.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycookbook.CHAVE_RECEITA_ID
+import com.example.mycookbook.R
 import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityListaDeReceitasBinding
 import com.example.mycookbook.repository.ReceitaRepository
@@ -16,6 +18,7 @@ import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeReceitasAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
+import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
 
 class ListaDeReceitasActivity : AppCompatActivity() {
@@ -29,8 +32,54 @@ class ListaDeReceitasActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        configuraToolbar()
         setsUpViewModel()
         cofiguraFab()
+    }
+
+    private fun configuraToolbar() {
+        val toolbar = binding.toolbarListaDeReceitas
+        configuraMenu(toolbar)
+    }
+
+    private fun configuraMenu(toolbar: MaterialToolbar) {
+        toolbar.inflateMenu(R.menu.menu_pesquisa)
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_search -> {
+                    val searchView = menuItem.actionView as? SearchView
+                    configuraPesquisa(searchView)
+                    true
+                }
+                else -> false
+            }
+
+        }
+    }
+
+
+    private fun configuraPesquisa(search: SearchView?) {
+        search?.let {
+            search.isSubmitButtonEnabled = false
+            search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        model.todasReceitasLiveData.value?.let { receitas ->
+                            val listaFiltrada = receitas.filter { receita ->
+                                receita.nome.contains(newText, true)
+                            }
+                            adapter.submitList(listaFiltrada)
+                        }
+                    } ?: buscaReceitas()
+                    return false
+                }
+            }
+            )
+        }
     }
 
     private fun setsUpViewModel() {

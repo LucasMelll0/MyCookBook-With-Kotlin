@@ -34,7 +34,7 @@ class DetalhesReceitaActivity : AppCompatActivity() {
     private fun setsUpViewModel() {
         val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
         val modelFactory = ReceitaViewModelFactory(repository)
-        model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
+        model = ViewModelProvider(this, modelFactory)[ReceitaViewModel::class.java]
 
     }
 

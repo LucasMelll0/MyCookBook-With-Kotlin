@@ -104,7 +104,7 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private fun configuraReceitaViewModel() {
         val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
         val modelFactory = ReceitaViewModelFactory(repository)
-        model = ViewModelProvider(this, modelFactory).get(ReceitaViewModel::class.java)
+        model = ViewModelProvider(this, modelFactory)[ReceitaViewModel::class.java]
     }
 
     private fun configuraFormReceitaViewModel() {
