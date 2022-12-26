@@ -5,21 +5,18 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mycookbook.CHAVE_RECEITA_ID
 import com.example.mycookbook.R
-import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityListaDeReceitasBinding
-import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeReceitasAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
-import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListaDeReceitasActivity : AppCompatActivity() {
 
@@ -27,20 +24,21 @@ class ListaDeReceitasActivity : AppCompatActivity() {
     private val recyclerViewReceitas by lazy { binding.recyclerviewListaReceitas }
     private val fabAdicionarReceita by lazy { binding.fabAdicionarReceita }
     private val adapter by lazy { ListaDeReceitasAdapter(this) }
-    private lateinit var model: ReceitaViewModel
+    private val model: ReceitaViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configuraToolbar()
-        setsUpViewModel()
         cofiguraFab()
+        configuraRecyclerView()
     }
 
     private fun configuraToolbar() {
         val toolbar = binding.toolbarListaDeReceitas
         configuraMenu(toolbar)
     }
+
 
     private fun configuraMenu(toolbar: MaterialToolbar) {
         toolbar.inflateMenu(R.menu.menu_pesquisa)
@@ -56,7 +54,6 @@ class ListaDeReceitasActivity : AppCompatActivity() {
 
         }
     }
-
 
     private fun configuraPesquisa(search: SearchView?) {
         search?.let {
@@ -80,13 +77,6 @@ class ListaDeReceitasActivity : AppCompatActivity() {
             }
             )
         }
-    }
-
-    private fun setsUpViewModel() {
-        val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
-        val modelFactory = ReceitaViewModelFactory(repository)
-        model = ViewModelProvider(this, modelFactory)[ReceitaViewModel::class.java]
-        configuraRecyclerView()
     }
 
 

@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/app_name"
         app:titleTextColor="@color/yellow"
-        android:elevation="@dimen/cardview_default_elevation"/>
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_lista_receitas"

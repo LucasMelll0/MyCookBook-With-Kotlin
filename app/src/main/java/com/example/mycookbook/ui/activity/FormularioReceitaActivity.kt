@@ -8,11 +8,9 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,23 +18,21 @@ import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
 import com.example.mycookbook.R
 import com.example.mycookbook.TAG
-import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityFormularioReceitaBinding
 import com.example.mycookbook.model.Receita
-import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.adapterPadrao
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesFormularioAdapter
 import com.example.mycookbook.ui.viewmodel.FormReceitaViewModel
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
-import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
 import com.example.mycookbook.utilities.verificaPermissao
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FormularioReceitaActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityFormularioReceitaBinding.inflate(layoutInflater) }
-    private val viewModel: FormReceitaViewModel by viewModels()
-    private lateinit var model: ReceitaViewModel
+    private val viewModel: FormReceitaViewModel by viewModel()
+    private val model: ReceitaViewModel by viewModel()
     private var receitaId: String? = null
     private var imagem: String? = null
     private val fabSalva by lazy { binding.fabSalvaReceita }
@@ -87,24 +83,12 @@ class FormularioReceitaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Log.i(TAG, "onCreate: $ingredientes")
-        configuraViewModel()
         verificaSeTemExtras()
         configuraImagem()
         configuraListaIngredientes()
         configuraSpinnerCategoria()
         configuraFab()
-    }
-
-    private fun configuraViewModel() {
         configuraFormReceitaViewModel()
-        configuraReceitaViewModel()
-    }
-
-    private fun configuraReceitaViewModel() {
-        val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
-        val modelFactory = ReceitaViewModelFactory(repository)
-        model = ViewModelProvider(this, modelFactory)[ReceitaViewModel::class.java]
     }
 
     private fun configuraFormReceitaViewModel() {

@@ -2,18 +2,15 @@ package com.example.mycookbook.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.mycookbook.CHAVE_RECEITA_ID
-import com.example.mycookbook.database.AppDataBase
 import com.example.mycookbook.databinding.ActivityDetalhesReceitaBinding
 import com.example.mycookbook.model.Receita
-import com.example.mycookbook.repository.ReceitaRepository
 import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesDetalhesAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
-import com.example.mycookbook.ui.viewmodel.ReceitaViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetalhesReceitaActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDetalhesReceitaBinding.inflate(layoutInflater) }
@@ -21,21 +18,13 @@ class DetalhesReceitaActivity : AppCompatActivity() {
     private val adapterIngredientes by lazy {
         ListaDeIngredientesDetalhesAdapter(this@DetalhesReceitaActivity)
     }
-    private lateinit var model: ReceitaViewModel
+    private val model: ReceitaViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setsUpViewModel()
         verificaSeVeioExtras()
         configuraFabEditar()
-    }
-
-    private fun setsUpViewModel() {
-        val repository = ReceitaRepository(AppDataBase.instancia(this).ReceitaDAO())
-        val modelFactory = ReceitaViewModelFactory(repository)
-        model = ViewModelProvider(this, modelFactory)[ReceitaViewModel::class.java]
-
     }
 
     override fun onResume() {
