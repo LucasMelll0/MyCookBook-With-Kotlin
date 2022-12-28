@@ -10,14 +10,13 @@ import com.example.mycookbook.model.Receita
 import com.example.mycookbook.ui.activity.extensions.vaiPara
 import com.example.mycookbook.ui.recyclerview.adapter.ListaDeIngredientesDetalhesAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetalhesReceitaActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDetalhesReceitaBinding.inflate(layoutInflater) }
     private lateinit var idReceita: String
-    private val adapterIngredientes by lazy {
-        ListaDeIngredientesDetalhesAdapter(this@DetalhesReceitaActivity)
-    }
+    private val adapterIngredientes: ListaDeIngredientesDetalhesAdapter by inject()
     private val model: ReceitaViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

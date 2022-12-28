@@ -26,6 +26,7 @@ import com.example.mycookbook.ui.viewmodel.FormReceitaViewModel
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
 import com.example.mycookbook.utilities.verificaPermissao
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FormularioReceitaActivity : AppCompatActivity() {
@@ -36,13 +37,8 @@ class FormularioReceitaActivity : AppCompatActivity() {
     private var receitaId: String? = null
     private var imagem: String? = null
     private val fabSalva by lazy { binding.fabSalvaReceita }
-    private val ingredientes by lazy { mutableListOf<String>() }
-    private val adapterIngredientes by lazy {
-        ListaDeIngredientesFormularioAdapter(
-            this,
-            ingredientes
-        )
-    }
+    private val ingredientes: MutableList<String> by inject()
+    private val adapterIngredientes: ListaDeIngredientesFormularioAdapter by inject()
     private val spinnerIngredientes by lazy { binding.spinnerCategoriaReceita }
 
     companion object {

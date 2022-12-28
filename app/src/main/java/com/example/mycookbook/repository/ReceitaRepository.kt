@@ -6,9 +6,7 @@ import com.example.mycookbook.model.Receita
 
 class ReceitaRepository(private val dao : ReceitaDAO) {
 
-    suspend fun buscaTodas(): List<Receita> = dao.buscaTodas()
-
-    fun buscaTodasLiveData() : LiveData<List<Receita>> = dao.buscaTodasLiveData()
+    val todasReceitas = dao.buscaTodas()
 
     suspend fun salva(receita: Receita) = dao.addReceita(receita)
 

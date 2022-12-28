@@ -1,7 +1,9 @@
 package com.example.mycookbook
 
 import android.app.Application
+import com.example.mycookbook.di.detalhesReceitaModule
 import com.example.mycookbook.di.formReceitaModule
+import com.example.mycookbook.di.listaReceitasModule
 import com.example.mycookbook.di.receitaModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -15,7 +17,12 @@ class ApplicationClass : Application() {
             androidLogger()
             androidContext(this@ApplicationClass)
 
-            modules(listOf(receitaModule, formReceitaModule) )
+            modules(listOf(
+                receitaModule,
+                listaReceitasModule,
+                formReceitaModule,
+                detalhesReceitaModule
+            ) )
         }
 
     }

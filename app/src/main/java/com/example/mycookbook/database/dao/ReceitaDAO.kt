@@ -3,6 +3,7 @@ package com.example.mycookbook.database.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.mycookbook.model.Receita
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReceitaDAO {
@@ -12,10 +13,7 @@ interface ReceitaDAO {
     suspend fun deletaReceita(receita: Receita)
 
     @Query("SELECT * FROM Receita")
-    fun buscaTodasLiveData(): LiveData<List<Receita>>
-
-    @Query("SELECT * FROM Receita")
-    suspend fun buscaTodas(): List<Receita>
+    fun buscaTodas(): Flow<List<Receita>>
 
     @Query("SELECT * FROM Receita WHERE id = :id")
     fun buscaPorId(id: String): LiveData<Receita?>

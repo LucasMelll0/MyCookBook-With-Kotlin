@@ -16,14 +16,13 @@ import com.example.mycookbook.ui.recyclerview.adapter.ListaDeReceitasAdapter
 import com.example.mycookbook.ui.viewmodel.ReceitaViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListaDeReceitasActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityListaDeReceitasBinding.inflate(layoutInflater) }
-    private val recyclerViewReceitas by lazy { binding.recyclerviewListaReceitas }
-    private val fabAdicionarReceita by lazy { binding.fabAdicionarReceita }
-    private val adapter by lazy { ListaDeReceitasAdapter(this) }
+    private val adapter: ListaDeReceitasAdapter by inject()
     private val model: ReceitaViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +80,7 @@ class ListaDeReceitasActivity : AppCompatActivity() {
 
 
     private fun cofiguraFab() {
+        val fabAdicionarReceita = binding.fabAdicionarReceita
         fabAdicionarReceita.setOnClickListener {
             val formularioParaNovaReceita = Intent(this, FormularioReceitaActivity::class.java)
             startActivity(formularioParaNovaReceita)
@@ -88,6 +88,7 @@ class ListaDeReceitasActivity : AppCompatActivity() {
     }
 
     private fun configuraRecyclerView() {
+        val recyclerViewReceitas = binding.recyclerviewListaReceitas
         recyclerViewReceitas.adapter = adapter
         recyclerViewReceitas.layoutManager = LinearLayoutManager(this)
         buscaReceitas()
