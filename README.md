@@ -44,7 +44,7 @@
   - [Koin](https://insert-koin.io/): Para injeção de depêndencias.
 
 ## Arquitetura
-**LiveList** utiliza a arquitetura MVVM e o padrão de Repositories, que segue as [recomendações oficiais do Google](https://developer.android.com/topic/architecture).
+**MyCookBook** utiliza a arquitetura MVVM e o padrão de Repositories, que segue as [recomendações oficiais do Google](https://developer.android.com/topic/architecture).
 </br></br>
 <img width="60%" src="screenshots/arquitetura.png"/>
 <br>
